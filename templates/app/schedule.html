@@ -1,0 +1,40 @@
+{% extends "app/base.html" %}
+
+{% block title %}Расписание{% endblock %}
+
+{% block content %}
+<div class="page-heading">
+    <h1>Расписание</h1>
+
+    <a class="button"
+       href="{% url 'app:schedule_create' %}">
+        Добавить в расписание
+    </a>
+</div>
+
+{% for item in schedule %}
+    <div class="schedule-row">
+        <span>
+            {{ item.date|date:"d.m.Y" }}
+            {{ item.time|time:"H:i" }}
+        </span>
+
+        <span>
+            <a href="{% url 'app:class_detail' item.yoga_class.pk %}">
+                {{ item.yoga_class.title }}
+            </a>
+        </span>
+
+        <span>
+            Тренер:
+            {{ item.yoga_class.trainer|default:"не указан" }}
+        </span>
+
+        <span>
+            Мест: {{ item.places }}
+        </span>
+    </div>
+{% empty %}
+    <p>Расписание пока пустое.</p>
+{% endfor %}
+{% endblock %}

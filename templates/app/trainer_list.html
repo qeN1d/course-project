@@ -1,0 +1,38 @@
+{% extends "app/base.html" %}
+
+{% block title %}Тренеры{% endblock %}
+
+{% block content %}
+<div class="page-heading">
+    <h1>Наши тренеры</h1>
+
+    <a class="button"
+       href="{% url 'app:trainer_create' %}">
+        Добавить тренера
+    </a>
+</div>
+
+<div class="grid">
+    {% for trainer in trainers %}
+        <article class="card">
+            <h2>{{ trainer.name }}</h2>
+
+            <p>
+                Опыт:
+                {{ trainer.experience }} лет
+            </p>
+
+            <p>
+                {{ trainer.bio|truncatewords:25 }}
+            </p>
+
+            <a class="button"
+               href="{% url 'app:trainer_detail' trainer.pk %}">
+                Подробнее
+            </a>
+        </article>
+    {% empty %}
+        <p>Тренеры пока не добавлены.</p>
+    {% endfor %}
+</div>
+{% endblock %}

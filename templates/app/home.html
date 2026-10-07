@@ -1,0 +1,72 @@
+{% extends "app/base.html" %}
+
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <h1>Гармония тела и духа</h1>
+
+    <p>
+        Занятия йогой для начинающих
+        и продвинутых учеников.
+    </p>
+
+    <a class="button"
+       href="{% url 'app:schedule' %}">
+        Посмотреть расписание
+    </a>
+</section>
+
+<h2>Наши занятия</h2>
+
+<div class="grid">
+    {% for item in classes %}
+        <article class="card">
+            <h3>{{ item.title }}</h3>
+
+            <p>
+                {{ item.description|truncatewords:20 }}
+            </p>
+
+            <p>
+                Уровень:
+                {{ item.get_level_display }}
+            </p>
+
+            <p>
+                Стоимость:
+                {{ item.price }} ₽
+            </p>
+
+            <a class="button"
+               href="{% url 'app:class_detail' item.pk %}">
+                Подробнее
+            </a>
+        </article>
+    {% empty %}
+        <p>Занятия пока не добавлены.</p>
+    {% endfor %}
+</div>
+
+<h2>Наши тренеры</h2>
+
+<div class="grid">
+    {% for trainer in trainers %}
+        <article class="card">
+            <h3>{{ trainer.name }}</h3>
+
+            <p>
+                Опыт:
+                {{ trainer.experience }} лет
+            </p>
+
+            <a class="button"
+               href="{% url 'app:trainer_detail' trainer.pk %}">
+                Профиль тренера
+            </a>
+        </article>
+    {% empty %}
+        <p>Тренеры пока не добавлены.</p>
+    {% endfor %}
+</div>
+{% endblock %}

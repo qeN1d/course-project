@@ -1,0 +1,46 @@
+{% extends "app/base.html" %}
+
+{% block title %}Занятия{% endblock %}
+
+{% block content %}
+<div class="page-heading">
+    <h1>Занятия</h1>
+
+    <a class="button"
+       href="{% url 'app:class_create' %}">
+        Добавить занятие
+    </a>
+</div>
+
+<div class="grid">
+    {% for item in classes %}
+        <article class="card">
+            <h2>{{ item.title }}</h2>
+
+            <p>{{ item.description }}</p>
+
+            <p>
+                Уровень:
+                {{ item.get_level_display }}
+            </p>
+
+            <p>
+                Продолжительность:
+                {{ item.duration }} минут
+            </p>
+
+            <p>
+                Стоимость:
+                {{ item.price }} ₽
+            </p>
+
+            <a class="button"
+               href="{% url 'app:class_detail' item.pk %}">
+                Подробнее
+            </a>
+        </article>
+    {% empty %}
+        <p>Занятия отсутствуют.</p>
+    {% endfor %}
+</div>
+{% endblock %}

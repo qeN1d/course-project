@@ -1,0 +1,33 @@
+{% extends "app/base.html" %}
+
+{% block title %}{{ trainer.name }}{% endblock %}
+
+{% block content %}
+<article class="card detail">
+    <h1>{{ trainer.name }}</h1>
+
+    <p>{{ trainer.bio }}</p>
+
+    <p>
+        Опыт работы:
+        {{ trainer.experience }} лет
+    </p>
+
+    <a class="button"
+       href="{% url 'app:trainer_update' trainer.pk %}">
+        Редактировать
+    </a>
+</article>
+
+<h2>Занятия тренера</h2>
+
+{% for item in classes %}
+    <div class="schedule-row">
+        <a href="{% url 'app:class_detail' item.pk %}">
+            {{ item.title }}
+        </a>
+    </div>
+{% empty %}
+    <p>У тренера пока нет занятий.</p>
+{% endfor %}
+{% endblock %}

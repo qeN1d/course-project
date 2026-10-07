@@ -1,0 +1,60 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+    <title>
+        {% block title %}Йога-студия{% endblock %}
+    </title>
+
+    <link rel="stylesheet"
+          href="{% static 'app/css/style.css' %}">
+</head>
+<body>
+<header class="header">
+    <div class="container header-inner">
+        <a class="logo"
+           href="{% url 'app:home' %}">
+            Йога-студия
+        </a>
+
+        <nav class="nav">
+            <a href="{% url 'app:home' %}">
+                Главная
+            </a>
+            <a href="{% url 'app:class_list' %}">
+                Занятия
+            </a>
+            <a href="{% url 'app:trainer_list' %}">
+                Тренеры
+            </a>
+            <a href="{% url 'app:schedule' %}">
+                Расписание
+            </a>
+        </nav>
+    </div>
+</header>
+
+<main class="container">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="message">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {% block content %}{% endblock %}
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <p>Йога-студия © 2026</p>
+    </div>
+</footer>
+</body>
+</html>

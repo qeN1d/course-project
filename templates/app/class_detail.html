@@ -1,0 +1,60 @@
+{% extends "app/base.html" %}
+
+{% block title %}{{ yoga_class.title }}{% endblock %}
+
+{% block content %}
+<article class="card detail">
+    <h1>{{ yoga_class.title }}</h1>
+
+    <p>{{ yoga_class.description }}</p>
+
+    <p>
+        <strong>Уровень:</strong>
+        {{ yoga_class.get_level_display }}
+    </p>
+
+    <p>
+        <strong>Продолжительность:</strong>
+        {{ yoga_class.duration }} минут
+    </p>
+
+    <p>
+        <strong>Стоимость:</strong>
+        {{ yoga_class.price }} ₽
+    </p>
+
+    {% if yoga_class.trainer %}
+        <p>
+            <strong>Тренер:</strong>
+            <a href="{% url 'app:trainer_detail' yoga_class.trainer.pk %}">
+                {{ yoga_class.trainer.name }}
+            </a>
+        </p>
+    {% endif %}
+
+    <a class="button"
+       href="{% url 'app:class_update' yoga_class.pk %}">
+        Редактировать
+    </a>
+</article>
+
+<h2>Расписание занятия</h2>
+
+{% for item in schedule %}
+    <div class="schedule-row">
+        <span>
+            {{ item.date|date:"d.m.Y" }}
+        </span>
+
+        <span>
+            {{ item.time|time:"H:i" }}
+        </span>
+
+        <span>
+            Мест: {{ item.places }}
+        </span>
+    </div>
+{% empty %}
+    <p>Занятие пока не добавлено в расписание.</p>
+{% endfor %}
+{% endblock %}
